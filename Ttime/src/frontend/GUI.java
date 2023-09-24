@@ -40,7 +40,7 @@ public class GUI extends JFrame {
 		search.add(new JTextField(10));
 		classes.add(search, BorderLayout.NORTH);
 		
-		String[] test_list = {"테스트1", "테스트2", "테스트3", "테스트4", "테스트5"};
+		String[] test_list = {"테스트1", "테스트2", "테스트3", "테스트4", "테스트5"}; //DB에서 받아온 데이터
 		JList<String> class_list = new JList<String>(test_list); //현재 과목 리스트
 		
 		classes.add(new JScrollPane(class_list), BorderLayout.CENTER);
