@@ -24,9 +24,11 @@ public class GUI extends JFrame {
 		static ArrayList<String[]> class_list; //시간표 정보를 저장할 동적 배열
 		static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
 		static JLabel[] grades_label = new JLabel[4]; //학점 정보를 담은 배열
+		static JList<ArrayList<String[]>> search_result = new JList<ArrayList<String[]>>(); //검색결과를 담을 리스트
 		
 		static //정적클래스의 초기화
 		{
+			search_result.setFixedCellWidth(100);
 			grades_label[0] = new JLabel("이번학기");
 			grades_label[1] = new JLabel("평점평균: 0.0    신청학점: 0.0");
 			grades_label[2] = new JLabel("전체학기");
@@ -87,31 +89,32 @@ public class GUI extends JFrame {
 		for (int i = 0; i < 4; i++)
 			grades.add(GUIData.grades_label[i]);
 		
-		JPanel classes = new JPanel(); //검색창, 수강목록을 담은 패널
-		classes.setLayout(new BorderLayout());
-		JPanel search = new JPanel(); // classes 안에 들어갈 검색창 패널
-		search.setLayout(new FlowLayout());
-		search.add(new JLabel("검색 "));
-		search.add(new JTextField(10)); //검색창
-		classes.add(search, BorderLayout.NORTH);
+		JPanel search_bar = new JPanel(); //검색창 패널
+		search_bar.setLayout(new FlowLayout());
+		search_bar.add(new JLabel("검색 "));
+		search_bar.add(new JTextField(10)); //검색창
+		
+		JPanel search = new JPanel(); //검색결과를 담을 패널
+		search.setLayout(new BorderLayout());
+		search.add(search_bar, BorderLayout.NORTH);
+		search.add(new JScrollPane(GUIData.search_result), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		//이부분은 추후 DB 파트 완성되면 수정함
 		String[] test_list = {"[A+]테스트1", "[A+]테스트2", "[A+]테스트3", "[A+]테스트4", "[A+]테스트5"}; //DB에서 받아온 데이터
 		JList<String> class_list = new JList<String>(test_list); //현재 과목 리스트
-		//
-		classes.add(new JScrollPane(class_list), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		JPanel menu = new JPanel(); //시간표를 제외한 패널들을 담은 메뉴 패널
 		menu.setLayout(new BorderLayout());
 		menu.add(cemester, BorderLayout.NORTH);
 		menu.add(grades, BorderLayout.SOUTH);
-		menu.add(classes, BorderLayout.CENTER);
+		menu.add(new JScrollPane(class_list), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		MainPane.setLayout(new BorderLayout()); //전체 패널에 모든 요소 추가
 		MainPane.add(calendar, BorderLayout.CENTER);
 		MainPane.add(menu, BorderLayout.WEST);
+		MainPane.add(search, BorderLayout.EAST);
 		
-		setSize(500, 400);
+		setSize(700, 500);
 		setVisible(true);
 	}
 
