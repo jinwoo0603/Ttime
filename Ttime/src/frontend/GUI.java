@@ -48,14 +48,14 @@ public class GUI extends JFrame {
 			}
 		}
 		
-		static void set_calendar(String[][] s) //시간표와 문자열 배열을 레퍼런스로 전달받아 시간표 값 수정
+		static void set_calendar(String[][] s) //문자열 배열을 레퍼런스로 전달받아 시간표 값 수정
 		{
 			for (int i = 0; i < 8; i++)
 				for (int j = 0; j < 5; j++)
 					calendar_label[i+1][j+1].setText(s[i][j]);
 		}
 		
-		static void set_grades(double[][] d) //성적 데이터와 실수 배열을 레퍼런스로 전달받아 성적 값 수정
+		static void set_grades(double[][] d) //실수 배열을 레퍼런스로 전달받아 성적 값 수정
 		{
 			grades_label[1].setText("평점평균: " + d[0][0] + "    신청학점: " + d[0][1]);
 			grades_label[3].setText("평점평균: " + d[1][0] + "    신청학점: " + d[1][1]);
