@@ -28,7 +28,8 @@ public class GUI extends JFrame {
 		
 		static //정적클래스의 초기화
 		{
-			search_result.setFixedCellWidth(100);
+			search_result.setFixedCellWidth(100); //검색결과창 크기 고정
+			
 			grades_label[0] = new JLabel("이번학기");
 			grades_label[1] = new JLabel("평점평균: 0.0    신청학점: 0.0");
 			grades_label[2] = new JLabel("전체학기");
@@ -102,6 +103,7 @@ public class GUI extends JFrame {
 		//이부분은 추후 DB 파트 완성되면 수정함
 		String[] test_list = {"[A+]테스트1", "[A+]테스트2", "[A+]테스트3", "[A+]테스트4", "[A+]테스트5"}; //DB에서 받아온 데이터
 		JList<String> class_list = new JList<String>(test_list); //현재 과목 리스트
+		class_list.setFixedCellWidth(100); //과목 리스트 크기 고정
 		
 		JPanel menu = new JPanel(); //시간표를 제외한 패널들을 담은 메뉴 패널
 		menu.setLayout(new BorderLayout());
