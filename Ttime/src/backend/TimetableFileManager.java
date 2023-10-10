@@ -1,3 +1,5 @@
+//시간표 데이터 파일을 생성, 편집하는 작업 처리
+
 import java.io.*;
 import java.util.List;
 
