@@ -1,4 +1,4 @@
-
+//각 학기별 시간표 데이터를 나타내며, 강의 이름, 시간, 강의실 정보 저장
 package backend;
 import java.io.*;
 import java.util.ArrayList;
