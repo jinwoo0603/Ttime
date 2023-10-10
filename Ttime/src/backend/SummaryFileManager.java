@@ -1,3 +1,5 @@
+// 총괄 파일을 생성, 편집하고 읽는 작업을 처리
+
 import java.io.*;
 import java.util.List;
 
