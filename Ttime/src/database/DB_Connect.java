@@ -67,7 +67,7 @@ public class DB_Connect {
                          "rating = ? OR " +
                          "capacity = ? OR " +
                          "target = ? OR " +
-                         "remark = ?";//?는 플레이스홀더로 쿼리 텍스트 부분과 값을 바인딩 가능 
+                         "remark = ?";//?는 플레이스홀더로 쿼리 텍스트 부분과 값을 동적으로 바인딩 가능 
 
             PreparedStatement st = connect.prepareStatement(find);//비교하기 위해만든 find가 위의 SQL이랑 자료형이랑 달리 하나라도 같으면 추출하기 위해서 OR을 사용해 자료구조가 다르기 때문에 새로이 쿼리에 값을 불러와 저장하기 위한 객체 생성했음
             for (int i = 1; i <= 11; i++) {
