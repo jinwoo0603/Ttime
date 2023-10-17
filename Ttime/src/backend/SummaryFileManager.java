@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SummaryFileManager {
     // 총괄 파일에 총괄 정보를 저장하는 메소드
-    public static void saveSummaryToFile(String raw_data, List<String> summaryData) {
+    public static void saveSummaryToFile(String raw_data, List<String []> summaryData) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
             for (String summaryLine : summaryData) {
                 writer.println(summaryLine); // 한 줄씩 총괄 정보를 파일에 저장
@@ -15,9 +15,9 @@ public class SummaryFileManager {
         }
     }
 
-    // 파일에서 총괄 정보를 읽어와 List<String>으로 반환하는 메소드
-    public static List<String> readSummaryFromFile(String raw_data) {
-        List<String> summaryData = new ArrayList<>();
+    // 파일에서 총괄 정보를 읽어와 List<String []>으로 반환하는 메소드
+    public static List<String []> readSummaryFromFile(String raw_data) {
+        List<String []> summaryData = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(raw_data))) {
             String line;
             while ((line = reader.readLine()) != null) {
