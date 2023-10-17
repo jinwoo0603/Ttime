@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TimetableData {
-    private List<String> courses; // 강의 데이터 저장하는 리스트
+    private List<String []> courses; // 강의 데이터 저장하는 리스트
 
     public TimetableData() {
         this.courses = new ArrayList<>(); // 생성자에서 리스트 초기화
@@ -20,7 +20,7 @@ public class TimetableData {
     }
     
 // 저장된 강의 데이터를 반환하는 메소드
-    public List<String> getCourses() {
+    public List<String []> getCourses() {
         return courses;
     }
 }
