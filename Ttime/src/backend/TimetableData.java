@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TimetableData {
     private List<String> courses; // 강의 데이터 저장하는 리스트
 
