@@ -4,6 +4,7 @@ import javax.swing.border.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 enum Week { //요일을 담은 열거형 변수
 	월(1),
@@ -21,10 +22,10 @@ public class GUI extends JFrame {
 	
 	static class GUIData //UI에 나타낼 정보들을 저장할 정적 클래스
 	{
-		static ArrayList<String[]> class_list; //시간표 정보를 저장할 동적 배열
+		static Vector<String> class_list = new Vector<String>(); //시간표 정보를 저장할 동적 배열
 		static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
 		static JLabel[] grades_label = new JLabel[4]; //학점 정보를 담은 배열
-		static JList<ArrayList<String[]>> search_result = new JList<ArrayList<String[]>>(); //검색결과를 담을 리스트
+		static JList<String> search_result = new JList<String>(); //검색결과를 담을 리스트
 		
 		static //정적클래스의 초기화
 		{
@@ -100,9 +101,7 @@ public class GUI extends JFrame {
 		search.add(search_bar, BorderLayout.NORTH);
 		search.add(new JScrollPane(GUIData.search_result), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
-		//이부분은 추후 DB 파트 완성되면 수정함
-		String[] test_list = {"[A+]테스트1", "[A+]테스트2", "[A+]테스트3", "[A+]테스트4", "[A+]테스트5"}; //DB에서 받아온 데이터
-		JList<String> class_list = new JList<String>(test_list); //현재 과목 리스트
+		JList<String> class_list = new JList<String>(GUIData.class_list); //현재 과목 리스트
 		class_list.setFixedCellWidth(100); //과목 리스트 크기 고정
 		
 		JPanel menu = new JPanel(); //시간표를 제외한 패널들을 담은 메뉴 패널
