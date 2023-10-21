@@ -53,7 +53,7 @@ public class DB_Connect {
         return false;//데이터 쿼리랑 비교해서 있는지 확인 함수
     }
 
-    public String[][] findMatchingRows(String input) {//스윙에서 입력받은 매개변수 finMatchingRows(매개변수)로 매소드 호출해서 데이터 저장된 이차원 배열 리턴 받으시면 될 것 같아요 
+    public String[] findMatchingRows(String input) {//스윙에서 입력받은 매개변수 finMatchingRows(매개변수)로 매소드 호출해서 데이터 저장된 이차원 배열 리턴 받으시면 될 것 같아요 
         try {
             String find = "SELECT * FROM raw_data " +
                          "WHERE " +
@@ -76,19 +76,19 @@ public class DB_Connect {
 
             result = st.executeQuery();//PreparedStatement에 설정되 형식의 쿼리에서 or을 사용해서 하나라도 같은 데이터가 있으면 그 행들 전부로 집합을 만들고 Resultset 객체 resultdp 저장함
             
-            List<String[]> matchingRowsList = new ArrayList<>();
-
+            List<String> matchingRowsList = new ArrayList<>();
             while (result.next()) {
-                String[] rowData = new String[12]; // 열의 수에 따라 배열 크기 설정 + 평점? 학점?을 저장할 공간 하나 더 만들어두긴 했는데 이게 맞나 모르겠네요 아니면 나중에 수정하겠습니다.
+            	 StringBuffer rowData = new StringBuffer("A+");	; // 열의 수에 따라 배열 크기 설정 + 평점? 학점?을 저장할 공간 하나 더 만들어두긴 했는데 이게 맞나 모르겠네요 아니면 나중에 수정하겠습니다.
                 for (int i = 0; i < 11; i++) {
-                    rowData[i] = result.getString(i + 1); // 1부터 시작하는 인덱스를 사용하여 추출했던 행의 열 데이터 추출
+                	rowData.append(" ");
+                    rowData.append(result.getString(i + 1)); // 1부터 시작하는 인덱스를 사용하여 추출했던 행의 열 데이터 추출
                 }
-                matchingRowsList.add(rowData); // 일치하는 행을 리스트에 추가 *행 하나의 열들은 스트링 배열로 만들었고 그렇게 만든 행들을 리스트에 넣어둠
+                matchingRowsList.add(rowData.toString()); // 일치하는 행을 리스트에 추가 *행 하나의 열들은 스트링 배열로 만들었고 그렇게 만든 행들을 리스트에 넣어둠
             }
 
             // matchingRowsList를 배열로 변환
             
-            String[][]matchingRows = matchingRowsList.toArray(new String[matchingRowsList.size()][]); 
+            String[]matchingRows = matchingRowsList.toArray(new String[matchingRowsList.size()]); 
 
             return matchingRows ;//일치하는 모든 행을 이차원 배열로 리턴했어요 이차원 배열로 리턴받으시면 될 것 같아요
             
@@ -96,7 +96,7 @@ public class DB_Connect {
             System.out.println("데이터 검색 과정에 오류가 발생했습니다: " + e.getMessage());
         }
 
-        return new String[0][0]; // 일치하는 데이터가 없을 때 빈 배열 반환
+       return new String[0]; // 일치하는 데이터가 없을 때 빈 배열 반환
     }//
     
 }
