@@ -117,6 +117,9 @@ public class GUI extends JFrame {
 		
 		setSize(700, 500);
 		setVisible(true);
+		String[][] myArray = new String[8][5];
+        myArray[1][2] = "Test";
+        GUIData.set_calendar(myArray);
 	}
 
 }
