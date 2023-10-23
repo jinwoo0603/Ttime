@@ -23,8 +23,8 @@ public class SummaryFileManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(raw_data))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] summaryLine = line.split(","); // 파일에서 한 줄을 쉼표로 분할하여 배열에 저장
-                summaryData.add(summaryLine); // 총괄 정보를 List에 추가
+                String[] summaryLine = line.split(","); // 한 줄을 쉼표로 나눠 배열에 저장
+                summaryData.add(summaryLine); // 총괄 정보 List에 추가
             }
         } catch (IOException e) {
             e.printStackTrace(); // 파일 읽기 중 발생하는 예외 출력
