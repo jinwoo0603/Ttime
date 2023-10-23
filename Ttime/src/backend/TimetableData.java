@@ -15,7 +15,7 @@ public class TimetableData {
     }
 
 // 강의 데이터 추가하는 메소드
-    public void addCourse(String raw_data) {
+    public void addCourse(String[] raw_data) {
         courses.add(raw_data);
     }
     
