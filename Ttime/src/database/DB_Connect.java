@@ -17,8 +17,8 @@ public class DB_Connect {
    
     public DB_Connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection("jdbc:mysql://192.168.0.107/?user=root/java_db", "root", "admin"); // 'root'은 user명, 'admin'은 비밀번호 입니다.
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://34.64.55.10:3306/class_list?user=root&password=admin&ssl=true"); //구글 클라우드 sql에 접속
             state = connect.createStatement();//쿼리 실행	
             
         } catch (Exception e) {
@@ -78,10 +78,10 @@ public class DB_Connect {
             
             List<String> matchingRowsList = new ArrayList<>();
             while (result.next()) {
-            	 StringBuffer rowData = new StringBuffer("A+");	; // 열의 수에 따라 배열 크기 설정 + 평점? 학점?을 저장할 공간 하나 더 만들어두긴 했는데 이게 맞나 모르겠네요 아니면 나중에 수정하겠습니다.
+            	 StringBuffer rowData = new StringBuffer("");	; // 열의 수에 따라 배열 크기 설정 + 평점? 학점?을 저장할 공간 하나 더 만들어두긴 했는데 이게 맞나 모르겠네요 아니면 나중에 수정하겠습니다.
                 for (int i = 0; i < 11; i++) {
-                	rowData.append(" ");
-                    rowData.append(result.getString(i + 1)); // 1부터 시작하는 인덱스를 사용하여 추출했던 행의 열 데이터 추출
+                	rowData.append(result.getString(i + 1));
+                    if (i != 10) rowData.append(" "); // 1부터 시작하는 인덱스를 사용하여 추출했던 행의 열 데이터 추출
                 }
                 matchingRowsList.add(rowData.toString()); // 일치하는 행을 리스트에 추가 *행 하나의 열들은 스트링 배열로 만들었고 그렇게 만든 행들을 리스트에 넣어둠
             }
