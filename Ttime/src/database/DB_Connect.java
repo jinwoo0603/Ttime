@@ -17,7 +17,6 @@ public class DB_Connect {
    
     public DB_Connect() {
         try {
-            //Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://34.64.55.10:3306/class_list?user=root&password=admin&ssl=true"); //구글 클라우드 sql에 접속
             state = connect.createStatement();//쿼리 실행	
             
