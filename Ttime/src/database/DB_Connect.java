@@ -18,7 +18,7 @@ public class DB_Connect {
     public DB_Connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/?user=root/java_db", "root", "admin"); // 'root'은 user명, 'admin'은 비밀번호 입니다.
+            connect = DriverManager.getConnection("jdbc:mysql://192.168.0.107/?user=root/java_db", "root", "admin"); // 'root'은 user명, 'admin'은 비밀번호 입니다.
             state = connect.createStatement();//쿼리 실행	
             
         } catch (Exception e) {
