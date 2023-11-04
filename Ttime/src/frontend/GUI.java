@@ -30,6 +30,7 @@ public class GUI extends JFrame {
 		static //정적클래스의 초기화
 		{
 			search_result.setFixedCellWidth(100); //검색결과창 크기 고정
+			search_result.addKeyListener(new SearchResultListener());
 			
 			grades_label[0] = new JLabel("이번학기");
 			grades_label[1] = new JLabel("평점평균: 0.0    신청학점: 0.0");
@@ -94,7 +95,9 @@ public class GUI extends JFrame {
 		JPanel search_bar = new JPanel(); //검색창 패널
 		search_bar.setLayout(new FlowLayout());
 		search_bar.add(new JLabel("검색 "));
-		search_bar.add(new JTextField(10)); //검색창
+		JTextField search_textfield = new JTextField(10);
+		search_textfield.addActionListener(new SearchBarListener());
+		search_bar.add(search_textfield); //검색창
 		
 		JPanel search = new JPanel(); //검색결과를 담을 패널
 		search.setLayout(new BorderLayout());
@@ -102,6 +105,7 @@ public class GUI extends JFrame {
 		search.add(new JScrollPane(GUIData.search_result), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		JList<String> class_list = new JList<String>(GUIData.class_list); //현재 과목 리스트
+		class_list.addKeyListener(new ClassListListener());
 		class_list.setFixedCellWidth(100); //과목 리스트 크기 고정
 		
 		JPanel menu = new JPanel(); //시간표를 제외한 패널들을 담은 메뉴 패널
