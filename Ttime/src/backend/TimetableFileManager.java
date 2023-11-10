@@ -2,11 +2,22 @@
 
 import java.io.*;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 public class TimetableFileManager {
 	// 시간표 데이터 파일로 저장하는 메소드
 	DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
-try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
+	public void saveTimetableToFile(String raw_data) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
+            // 8줄 초기화
+            for (int i = 0; i < 8; i++) {
+                writer.println("0.0,0.0");
+            }
+
+            // 전체 평균 1줄 초기화
+            writer.println("0.0,0.0");
+		
+	try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
             for (int i = 0; i < classListModel.getSize(); i++) {
                 writer.println(classListModel.getElementAt(i)); // 파일에 한 줄씩 강의 데이터 저장
             }
@@ -16,7 +27,7 @@ try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
 
     //파일에서 시간표 데이터를 읽어오는 메소드
     public static data readTimetableFromFile(String[] raw_data) {
-        data timetableData = new data();
+        data = new data();
         try (BufferedReader reader = new BufferedReader(new FileReader(raw_data))) {
             String[] line;
             while ((line = reader.readLine()) != null) {
