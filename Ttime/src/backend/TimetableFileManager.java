@@ -9,7 +9,7 @@ public class TimetableFileManager {
 	DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
 	public void saveTimetableToFile(String raw_data) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
-            // 8줄 초기화
+            // 8줄(모든학기) 초기화
             for (int i = 0; i < 8; i++) {
                 writer.println("0.0,0.0"); // (평균 학점, 신청 학점)
             }
