@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class SummaryFileManager {
     // 총괄 파일에 총괄 정보를 저장하는 메소드
-    public static void saveSummaryToFile(String raw_data, List<String []> summaryData) {
+    public static void saveSummaryToFile(raw_data, List<String []> summaryData) { //
         try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
             for (String summaryLine : summaryData) {
                 String line = String.join(",", summaryLine);
