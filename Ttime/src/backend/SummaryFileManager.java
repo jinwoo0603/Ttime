@@ -18,7 +18,7 @@ public class SummaryFileManager {
     }
 
     // 파일에서 총괄 정보를 읽어와 스트링 배열로 반환하는 메소드
-    public static String [] readSummaryFromFile(String raw_data) {
+    public static void readSummaryFromFile(String[] raw_data) {
         String [] summaryData = new String[]);
         try (BufferedReader reader = new BufferedReader(new FileReader(raw_data))) {
             String line;
