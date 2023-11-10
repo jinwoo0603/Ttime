@@ -11,7 +11,7 @@ public class TimetableFileManager {
         try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
             // 8줄 초기화
             for (int i = 0; i < 8; i++) {
-                writer.println("0.0,0.0");
+                writer.println("0.0,0.0"); // (평균 학점, 신청 학점)
             }
 
             // 전체 평균 1줄 초기화
