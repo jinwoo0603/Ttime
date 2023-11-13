@@ -20,10 +20,14 @@ enum Week { //요일을 담은 열거형 변수
 
 public class GUI extends JFrame {
 	
-	static class GUIData //UI에 나타낼 정보들을 저장할 정적 클래스
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static class GUIData //UI에 나타낼 정보들을 저장할 정적 클래스
 	{
-		static JList<String> class_list = new JList<String>();
-		//static Vector<String> class_list = new Vector<String>(); //시간표 정보를 저장할 동적 배열
+		static JList<String> class_list = new JList<String>(); //시간표 정보를 저장할 동적 배열
 		static DefaultListModel<String> class_list_model = new DefaultListModel<String>();
 		static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
 		static JLabel[] grades_label = new JLabel[4]; //학점 정보를 담은 배열

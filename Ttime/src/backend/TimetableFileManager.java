@@ -1,41 +1,49 @@
-// 시간표 데이터 파일을 생성, 편집하는 작업 처리
+package backend;// �떆媛꾪몴 �뜲�씠�꽣 �뙆�씪�쓣 �깮�꽦, �렪吏묓븯�뒗 �옉�뾽 泥섎━
 
 import java.io.*;
-import java.util.List;
 import javax.swing.DefaultListModel;
+import frontend.GUI;
 
 public class TimetableFileManager {
-	// 시간표 데이터 파일로 저장하는 메소드
-	DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
-	public void saveTimetableToFile(String raw_data) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
-            // 8줄(모든학기) 초기화
-            for (int i = 0; i < 8; i++) {
-                writer.println("0.0,0.0"); // (평균 학점, 신청 학점)
-            }
-
-            // 전체 평균 1줄 초기화
-            writer.println("0.0,0.0");
+	private String file_name;
+	private File file;
+	public TimetableFileManager(String s) {
+		file_name = new String(s);
+		file = new File(file_name);
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	// �떆媛꾪몴 �뜲�씠�꽣 �뙆�씪濡� ���옣�븯�뒗 硫붿냼�뱶
+	public void saveTimeTableToFile() {
+		DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
 		
-	try (PrintWriter writer = new PrintWriter(new FileWriter(raw_data))) {
+		try (PrintWriter writer = new PrintWriter(file)) {
+			
             for (int i = 0; i < classListModel.getSize(); i++) {
-                writer.println(classListModel.getElementAt(i)); // 파일에 한 줄씩 강의 데이터 저장
+                writer.println(classListModel.getElementAt(i)); // �뙆�씪�뿉 �븳 以꾩뵫 媛뺤쓽 �뜲�씠�꽣 ���옣
             }
         } catch (IOException e) {
-            e.printStackTrace(); // 파일 저장 중 발생하는 예외 처리
+            e.printStackTrace(); // �뙆�씪 ���옣 以� 諛쒖깮�븯�뒗 �삁�쇅 泥섎━
         }
+	}
 
-    //파일에서 시간표 데이터를 읽어오는 메소드
-    public static data readTimetableFromFile(String[] raw_data) {
-        data = new data();
-        try (BufferedReader reader = new BufferedReader(new FileReader(raw_data))) {
-            String[] line;
+    //�뙆�씪�뿉�꽌 �떆媛꾪몴 �뜲�씠�꽣瑜� �씫�뼱�삤�뒗 硫붿냼�뱶
+    public void readTimetableFromFile() {
+    	DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            classListModel.removeAllElements();
+            //나중에 시간표 기능 수정때 추가
             while ((line = reader.readLine()) != null) {
-                data.addCourse(line); // 파일에서 한 줄씩 읽어와 강의 데이터 추가
+            	classListModel.addElement(line); // �뙆�씪�뿉�꽌 �븳 以꾩뵫 �씫�뼱�� 媛뺤쓽 �뜲�씠�꽣 異붽�
             }
         } catch (IOException e) {
-            e.printStackTrace(); // 파일 읽기 중 발생하는 예외 처리
+            e.printStackTrace(); // �뙆�씪 �씫湲� 以� 諛쒖깮�븯�뒗 �삁�쇅 泥섎━
         }
-        return data;
+        
     }
 }
