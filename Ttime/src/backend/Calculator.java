@@ -4,7 +4,7 @@ import javax.swing.DefaultListModel;
 import frontend.GUI;
 
 public class Calculator {
-    public static double[] cemesterAverage() {
+    public double[] cemesterAverage() {
     	double[] values = {0, 0};
     	DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
     	int non_score_count = 0;
@@ -34,7 +34,7 @@ public class Calculator {
     	values[0] /= (classListModel.getSize() - non_score_count);
     	return values;
     }
-    public static void summaryAverage(String[][] num) {
+    public void summaryAverage(String[][] num) {
     	double avg = 0, tot = 0;
     	for (int i = 0; i < 8; i++) {
     		String[] element = {num[i][0], num[i][1]};

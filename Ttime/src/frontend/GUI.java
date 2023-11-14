@@ -27,8 +27,9 @@ public class GUI extends JFrame {
 
 	public static class GUIData //UI에 나타낼 정보들을 저장할 정적 클래스
 	{
-		static JList<String> class_list = new JList<String>(); //시간표 정보를 저장할 동적 배열
+		public static JList<String> class_list = new JList<String>(); //시간표 정보를 저장할 동적 배열
 		static DefaultListModel<String> class_list_model = new DefaultListModel<String>();
+		public static String current_cemester;
 		static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
 		static JLabel[] grades_label = new JLabel[4]; //학점 정보를 담은 배열
 		static JList<String> search_result = new JList<String>(); //검색결과를 담을 리스트
@@ -70,7 +71,7 @@ public class GUI extends JFrame {
 					calendar_label[i+1][j+1].setText(s[i][j]);
 		}
 		
-		static void set_grades(double[][] d) //실수 배열을 레퍼런스로 전달받아 성적 값 수정
+		static void set_grades(String[][] d) //실수 배열을 레퍼런스로 전달받아 성적 값 수정
 		{
 			grades_label[1].setText("평점평균: " + d[0][0] + "    신청학점: " + d[0][1]);
 			grades_label[3].setText("평점평균: " + d[1][0] + "    신청학점: " + d[1][1]);

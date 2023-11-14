@@ -21,7 +21,7 @@ public class SummaryFileManager {
 			e.printStackTrace();
 		}
 	}
-    public static void saveSummaryToFile(String[][] summaryData) { //
+    public void saveSummaryToFile(String[][] summaryData) { //
     	
     	try (PrintWriter writer = new PrintWriter(new FileWriter("summary.txt"))) {
             for (int i = 0; i < 9; i++) {
@@ -34,15 +34,15 @@ public class SummaryFileManager {
     }
 
     // �뙆�씪�뿉�꽌 珥앷큵 �젙蹂대�� �씫�뼱�� �뒪�듃留� 諛곗뿴濡� 諛섑솚�븯�뒗 硫붿냼�뱶
-    public static String[][] readSummaryFromFile(String raw_data) {
+    public String[][] readSummaryFromFile() {
         String [][] summaryData = new String[9][2];
-        try (BufferedReader reader = new BufferedReader(new FileReader(raw_data))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("summary.txt"))) {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
                 String[] summaryLine = line.split(","); // �븳 以꾩쓣 �돹�몴濡� �굹�닠 諛곗뿴�뿉 ���옣
                 for (int j = 0; j < 2; j++) {
-                	summaryData[j][i] = summaryLine[j]; // 珥앷큵 �젙蹂� List�뿉 異붽�
+                	summaryData[i][j] = summaryLine[j]; // 珥앷큵 �젙蹂� List�뿉 異붽�
                 }
                 i++;
             }
