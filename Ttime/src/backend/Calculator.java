@@ -29,7 +29,7 @@ public class Calculator {
     		else if (element[0].equals("F")) {}
     		else
     			non_score_count++;
-    		values[1] += Double.parseDouble(element[8]); //8¹øÂ° ¿ø¼Ò°¡ ÇĞÁ¡ÀÓ
+    		values[1] += Double.parseDouble(element[8]); //8ë²ˆì§¸ ì›ì†Œê°€ í•™ì ì„
     	}
     	values[0] /= (classListModel.getSize() - non_score_count);
     	return values;
