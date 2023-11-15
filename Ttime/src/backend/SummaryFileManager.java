@@ -25,7 +25,7 @@ public class SummaryFileManager {
     	
     	try (PrintWriter writer = new PrintWriter(new FileWriter("summary.txt"))) {
             for (int i = 0; i < 9; i++) {
-                String line = summaryData[i][0] + summaryData[i][1];
+                String line = summaryData[i][0] + "," + summaryData[i][1];
                 writer.println(line); // �븳 以꾩뵫 珥앷큵 �젙蹂대�� �뙆�씪�뿉 ���옣
             }
         } catch (IOException e) {

@@ -34,7 +34,7 @@ public class Calculator {
     	values[0] /= (classListModel.getSize() - non_score_count);
     	return values;
     }
-    public void summaryAverage(String[][] num) {
+    public String[][] summaryAverage(String[][] num) {
     	double avg = 0, tot = 0;
     	for (int i = 0; i < 8; i++) {
     		String[] element = {num[i][0], num[i][1]};
@@ -42,6 +42,7 @@ public class Calculator {
     		tot += Double.parseDouble(element[1]);
     	}
     	num[8][0] = Double.toString(avg / 8);
-    	num[9][1] = Double.toString(tot);
+    	num[8][1] = Double.toString(tot);
+    	return num;
     }
 }

@@ -39,6 +39,8 @@ public class GUI extends JFrame {
 			search_result.setFixedCellWidth(100); //검색결과창 크기 고정
 			search_result.addKeyListener(new SearchResultListener());
 			
+			current_cemester = new String("1-1");
+			
 			class_list.setFixedCellWidth(100);
 			class_list.addKeyListener(new ClassListListener());
 			class_list.setModel(class_list_model);
@@ -95,8 +97,11 @@ public class GUI extends JFrame {
 		cemester.setLayout(new GridLayout(1, 2));
 		String[] cemester_list = {"1-1", "1-2", "2-1", "2-2", "3-1", "3-2", "4-1", "4-2"};
 		JComboBox<String> cemester_combo = new JComboBox<String>(cemester_list); //학기 선택창을 구현할 콤보버튼
+		cemester_combo.addActionListener(new CemesterListener());
 		cemester.add(cemester_combo);
-		cemester.add(new JButton("수정")); //수정버튼
+		JButton cemester_button = new JButton("갱신");
+		cemester_button.addActionListener(new EditBtnListener());
+		cemester.add(cemester_button); //수정버튼
 		
 		JPanel grades = new JPanel(); //패널 안 성적 텍스트를 놓을 패널
 		grades.setLayout(new GridLayout(4, 1));

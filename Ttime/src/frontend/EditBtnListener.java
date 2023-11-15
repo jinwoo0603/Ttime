@@ -2,6 +2,7 @@ package frontend;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import backend.SummaryFileManager;
+import backend.TimetableFileManager;
 import backend.Calculator;
 
 public class EditBtnListener implements ActionListener {
@@ -9,8 +10,12 @@ public class EditBtnListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		TimetableFileManager tfile_manager = new TimetableFileManager(GUI.GUIData.current_cemester + ".txt");
+		tfile_manager.saveTimeTableToFile();
+		
 		SummaryFileManager sfile_manager = new SummaryFileManager();
 		String[][] former_score = sfile_manager.readSummaryFromFile();
+		
 		int index = 0;
 		if (GUI.GUIData.current_cemester.equals("1-1"))
 			index = 0;
@@ -28,10 +33,14 @@ public class EditBtnListener implements ActionListener {
 			index = 6;
 		else if (GUI.GUIData.current_cemester.equals("4-2"))
 			index = 7;
+		
 		Calculator cal = new Calculator();
-		cal.summaryAverage(former_score);
-		String[][] new_score = { {former_score[index][0], former_score[index][1]}, {former_score[8][0], former_score[8][1]} };
-		GUI.GUIData.set_grades(new_score);
+		String[][] new_score = cal.summaryAverage(former_score);
+		//계산파트가 문제인듯?
+		
+		String[][] return_value = { {new_score[index][0], new_score[index][1]}, {new_score[8][0], new_score[8][1]} };
+		GUI.GUIData.set_grades(return_value);
+		sfile_manager.saveSummaryToFile(new_score);
 	}
 
 }
