@@ -34,7 +34,7 @@ public class CemesterListener implements ActionListener {
 			index = 6;
 		else if (selectedFile.equals("4-2.txt"))
 			index = 7;
-		String[][] score = { {summary[index][0], summary[index][0]}, {summary[8][0], summary[8][1]} };
+		String[][] score = { {summary[index][0], summary[index][1]}, {summary[8][0], summary[8][1]} };
 		GUI.GUIData.set_grades(score);
 	}
 	

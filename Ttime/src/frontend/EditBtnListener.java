@@ -35,12 +35,14 @@ public class EditBtnListener implements ActionListener {
 			index = 7;
 		
 		Calculator cal = new Calculator();
-		String[][] new_score = cal.summaryAverage(former_score);
-		//계산파트가 문제인듯?
+		double[] new_score = cal.cemesterAverage();
 		
-		String[][] return_value = { {new_score[index][0], new_score[index][1]}, {new_score[8][0], new_score[8][1]} };
+		former_score[index][0] = String.valueOf(new_score[0]);
+		former_score[index][1] = String.valueOf(new_score[1]);
+		cal.summaryAverage(former_score);
+		String[][] return_value = {{former_score[index][0], former_score[index][1]}, {former_score[8][0], former_score[8][1]}};
 		GUI.GUIData.set_grades(return_value);
-		sfile_manager.saveSummaryToFile(new_score);
+		sfile_manager.saveSummaryToFile(former_score);
 	}
 
 }

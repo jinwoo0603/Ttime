@@ -75,6 +75,12 @@ public class GUI extends JFrame {
 		
 		static void set_grades(String[][] d) //실수 배열을 레퍼런스로 전달받아 성적 값 수정
 		{
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					if (d[i][j].length() > 3)
+						d[i][j] = d[i][j].substring(0, 4);
+				}
+			}
 			grades_label[1].setText("평점평균: " + d[0][0] + "    신청학점: " + d[0][1]);
 			grades_label[3].setText("평점평균: " + d[1][0] + "    신청학점: " + d[1][1]);
 		}
