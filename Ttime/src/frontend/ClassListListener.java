@@ -20,6 +20,7 @@ public class ClassListListener extends KeyAdapter {
 		
         if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
         	classListModel.remove(selectedIndex);
+        	GUI.GUIData.set_calendar(selectedItem, 4, false);
         }
         else if (e.getKeyChar() == ',') {
         	if (selected_score != "A+") {

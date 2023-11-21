@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 enum Week { //요일을 담은 열거형 변수
 	월(1),
@@ -30,7 +32,7 @@ public class GUI extends JFrame {
 		public static JList<String> class_list = new JList<String>(); //시간표 정보를 저장할 동적 배열
 		static DefaultListModel<String> class_list_model = new DefaultListModel<String>();
 		public static String current_cemester;
-		static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
+		public static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
 		static JLabel[] grades_label = new JLabel[4]; //학점 정보를 담은 배열
 		static JList<String> search_result = new JList<String>(); //검색결과를 담을 리스트
 		
@@ -66,11 +68,72 @@ public class GUI extends JFrame {
 			}
 		}
 		
-		static void set_calendar(String[][] s) //문자열 배열을 레퍼런스로 전달받아 시간표 값 수정
+		public static boolean set_calendar(String s, int type, boolean mode) //문자열 배열을 레퍼런스로 전달받아 시간표 값 수정
 		{
-			for (int i = 0; i < 8; i++)
-				for (int j = 0; j < 5; j++)
-					calendar_label[i+1][j+1].setText(s[i][j]);
+			///for (int i = 0; i < 8; i++)
+				///for (int j = 0; j < 5; j++)
+					///calendar_label[i+1][j+1].setText(s[i][j]);
+			Vector<String[]> v = new Vector<String[]>();
+			String[] sSplit = s.split(" ");
+			String time_raw = sSplit[type];
+			
+			String[] time_list = time_raw.split("\\|");
+			
+			for (String time : time_list) {
+				Pattern pattern = Pattern.compile("\\[([^\\]]*)[\\-]?\\d*\\]");
+				Matcher matcher = pattern.matcher(time);
+				String match = null;
+				while (matcher.find()) {
+		            match = matcher.group(1); // 대괄호 안의 내용에 해당하는 그룹
+		        }
+				
+				String weekDay = match.substring(0, 1);
+				String classTime = match.substring(1);
+				
+				Week w = Week.valueOf(weekDay);
+				weekDay = String.valueOf(w.ordinal());
+				
+				/*
+				 * if (classTime.length() != 1) { String[] ct = classTime.split("-"); int start
+				 * = Integer.parseInt(ct[0]); int end = Integer.parseInt(ct[1]); String[]
+				 * resultArray = new String[end - start + 1]; for (int i = start; i <= end; i++)
+				 * { resultArray[i - start] = String.valueOf(i); } classTime = String.join(",",
+				 * resultArray); }
+				 */
+				v.add(new String[] {weekDay, classTime});
+			}
+			
+			for (String[] ct : v) {
+				String[] class_col = ct[1].split("-");
+
+				if (class_col.length == 1) {
+					if (!calendar_label[Integer.valueOf(ct[1])][Integer.valueOf(ct[0])+1].getText().equals("") && mode)
+						return false;
+				}
+				else {
+					for (int i = 0; i < 2; i++) {
+						if (!calendar_label[Integer.valueOf(class_col[i])][Integer.valueOf(ct[0])+1].getText().equals("") && mode)
+							return false;
+					}
+				}
+			}
+			
+			String m = "";
+			if (mode)
+				m = sSplit[type - 2];
+			
+			for (String[] ct : v) {
+				String[] class_col = ct[1].split("-");
+				if (class_col.length == 1) {
+					calendar_label[Integer.valueOf(ct[1])][Integer.valueOf(ct[0])+1].setText(m);
+				}
+				else {
+					for (int i = Integer.valueOf(class_col[0]); i <= Integer.valueOf(class_col[1]); i++) {
+						calendar_label[i][Integer.valueOf(ct[0])+1].setText(m);
+					}
+				}
+			}
+			return true;
 		}
 		
 		static void set_grades(String[][] d) //실수 배열을 레퍼런스로 전달받아 성적 값 수정

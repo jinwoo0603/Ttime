@@ -34,12 +34,16 @@ public class TimetableFileManager {
     //�뙆�씪�뿉�꽌 �떆媛꾪몴 �뜲�씠�꽣瑜� �씫�뼱�삤�뒗 硫붿냼�뱶
     public void readTimetableFromFile() {
     	DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
+    	for (int i = 0; i < 8; i++)
+    		for (int j = 0; j < 5; j++)
+    			GUI.GUIData.calendar_label[i+1][j+1].setText("");
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             classListModel.removeAllElements();
             //나중에 시간표 기능 수정때 추가
             while ((line = reader.readLine()) != null) {
             	classListModel.addElement(line); // �뙆�씪�뿉�꽌 �븳 以꾩뵫 �씫�뼱�� 媛뺤쓽 �뜲�씠�꽣 異붽�
+            	GUI.GUIData.set_calendar(line, 4, true);
             }
         } catch (IOException e) {
             e.printStackTrace(); // �뙆�씪 �씫湲� 以� 諛쒖깮�븯�뒗 �삁�쇅 泥섎━

@@ -9,6 +9,7 @@ public class SearchResultListener extends KeyAdapter {
 		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 			JList<String> jList = (JList<String>)e.getSource();
             String selectedItem = jList.getSelectedValue();
+            GUI.GUIData.set_calendar(selectedItem, 3, true);
             DefaultListModel<String> classListModel = (DefaultListModel<String>) GUI.GUIData.class_list.getModel();
             if (selectedItem != null) { // selectedItem가 null인지 확인
             	classListModel.addElement("A+ " + selectedItem);
