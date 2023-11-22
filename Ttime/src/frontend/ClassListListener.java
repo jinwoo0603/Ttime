@@ -21,18 +21,21 @@ public class ClassListListener extends KeyAdapter {
         if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
         	classListModel.remove(selectedIndex);
         	GUI.GUIData.set_calendar(selectedItem, 4, false);
+        	GUI.GUIData.refresh_file();
         }
         else if (e.getKeyChar() == ',') {
         	if (selected_score != "A+") {
         		String new_score = score[--score_index];
         		classListModel.set(selectedIndex, new_score + rest);
         	}
+        	GUI.GUIData.refresh_file();
         }
         else if (e.getKeyChar() == '.') {
         	if (selected_score != "NP") {
         		String new_score = score[++score_index];
         		classListModel.set(selectedIndex, new_score + rest);
         	}
+        	GUI.GUIData.refresh_file();
         }
     }
 }

@@ -14,6 +14,7 @@ public class SearchResultListener extends KeyAdapter {
             if (selectedItem != null) { // selectedItem가 null인지 확인
             	classListModel.addElement("A+ " + selectedItem);
             }
+            GUI.GUIData.refresh_file();
         }
 	}
 
