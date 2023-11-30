@@ -12,16 +12,17 @@ import java.util.List;
 public class DB_Connect {
 
 	public Connection connect;
-    public Statement state;//특정한 데이터베이스에 sql문장을 실행 가능하게해주는 개체
-    public ResultSet result;//실행 결과 받아오는 객체	
+    public Statement state;//�듅�젙�븳 �뜲�씠�꽣踰좎씠�뒪�뿉 sql臾몄옣�쓣 �떎�뻾 媛��뒫�븯寃뚰빐二쇰뒗 媛쒖껜
+    public ResultSet result;//�떎�뻾 寃곌낵 諛쏆븘�삤�뒗 媛앹껜	
    
     public DB_Connect() {
         try {
-            connect = DriverManager.getConnection("jdbc:mysql://34.64.55.10:3306/class_list?user=root&password=admin&ssl=true"); //구글 클라우드 sql에 접속
-            state = connect.createStatement();//쿼리 실행	
+        	String jdbcUrl = "jdbc:mysql://34.64.55.10/class_list?user=root&password=admin";
+        	connect = DriverManager.getConnection(jdbcUrl); //援ш� �겢�씪�슦�뱶 sql�뿉 �젒�냽
+            state = connect.createStatement();//荑쇰━ �떎�뻾	
             
         } catch (Exception e) {
-            System.out.println("데이터 연결 과정에 오류가 발생했습니다: " + e.getMessage());
+            System.out.println("�뜲�씠�꽣 �뿰寃� 怨쇱젙�뿉 �삤瑜섍� 諛쒖깮�뻽�뒿�땲�떎: " + e.getMessage());
         }
     }
 
@@ -47,7 +48,7 @@ public class DB_Connect {
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("데이터 검색 과정에 오류가 발생했습니다: " + e.getMessage());
+            System.out.println("�뜲�씠�꽣 寃��깋 怨쇱젙�뿉 �삤瑜섍� 諛쒖깮�뻽�뒿�땲�떎: " + e.getMessage());
         }
         return false;
     }
@@ -61,15 +62,11 @@ public class DB_Connect {
                          "professor = ? OR " +
                          "scheduleRoom = ? OR " +
                          "classification = ? OR " +
-                         "grade = ? OR " +
-                         "credit = ? OR " +
-                         "rating = ? OR " +
-                         "capacity = ? OR " +
                          "target = ? OR " +
                          "remark = ?";
 
             PreparedStatement st = connect.prepareStatement(find);
-            for (int i = 1; i <= 11; i++) {
+            for (int i = 1; i <= 7; i++) {
                 st.setString(i, input);
             }
 
@@ -77,40 +74,18 @@ public class DB_Connect {
 
             List<String> matchingRowsList = new ArrayList<>();
             while (result.next()) {
-                // 검색어가 각 열의 값과 정확하게 일치해야만 데이터를 가져옴
-                if (input.equals(result.getString("subjectCode")) ||
-                    input.equals(result.getString("subjectName")) ||
-                    input.equals(result.getString("professor")) ||
-                    input.equals(result.getString("scheduleRoom")) ||
-                    input.equals(result.getString("classification")) ||
-                    input.equals(result.getString("grade")) ||
-                    input.equals(result.getString("credit")) ||
-                    input.equals(result.getString("rating")) ||
-                    input.equals(result.getString("capacity")) ||
-                    input.equals(result.getString("target")) ||
-                    input.equals(result.getString("remark"))) {
-
-                    StringBuffer rowData = new StringBuffer("");
-                    rowData.append(result.getString("subjectCode")).append(" "); 
-                    rowData.append(result.getString("subjectName")).append(" "); 
-                    rowData.append(result.getString("professor")).append(" "); 
-                    rowData.append(result.getString("scheduleRoom")).append(" "); 
-                    rowData.append(result.getString("classification")).append(" "); 
-                    rowData.append(result.getString("grade")).append(" "); 
-                    rowData.append(result.getString("credit")).append(" "); 
-                    rowData.append(result.getString("rating")).append(" "); 
-                    rowData.append(result.getString("capacity")).append(" "); 
-                    rowData.append(result.getString("target")).append(" "); 
-                    rowData.append(result.getString("remark")); 
-
-                    matchingRowsList.add(rowData.toString());
+            	StringBuffer rowData = new StringBuffer("");	; // 열의 수에 따라 배열 크기 설정 + 평점? 학점?을 저장할 공간 하나 더 만들어두긴 했는데 이게 맞나 모르겠네요 아니면 나중에 수정하겠습니다.
+                for (int i = 0; i < 11; i++) {
+                	rowData.append(result.getString(i + 1));
+                    if (i != 10) rowData.append(" ");
                 }
+                matchingRowsList.add(rowData.toString());
             }
 
             String[] matchingRows = matchingRowsList.toArray(new String[matchingRowsList.size()]);
             return matchingRows;
         } catch (Exception e) {
-            System.out.println("데이터 검색 과정에 오류가 발생했습니다: " + e.getMessage());
+            System.out.println("�뜲�씠�꽣 寃��깋 怨쇱젙�뿉 �삤瑜섍� 諛쒖깮�뻽�뒿�땲�떎: " + e.getMessage());
         }
 
         return new String[0];
