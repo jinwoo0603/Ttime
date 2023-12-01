@@ -40,11 +40,21 @@ public class GUI extends JFrame {
 		public static JLabel[][] calendar_label = new JLabel[9][6]; //각 시간표 칸을 담은 이차원 배열
 		static JLabel[] grades_label = new JLabel[4]; //학점 정보를 담은 배열
 		static JList<String> search_result = new JList<String>(); //검색결과를 담을 리스트
+		public static JTextField search_textfield = new JTextField(10);
 		
 		static //정적클래스의 초기화
 		{
 			search_result.setFixedCellWidth(100); //검색결과창 크기 고정
 			search_result.addKeyListener(new SearchResultListener());
+			search_result.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseEntered(MouseEvent e) {
+	            	DefaultListModel<String> listModel = new DefaultListModel<String>();
+
+	                String selectedValue = search_result.getSelectedValue();
+	                search_result.setToolTipText(selectedValue);
+	            }
+	        });
 			
 			current_cemester = new String("1-1");
 			
@@ -75,9 +85,6 @@ public class GUI extends JFrame {
 		
 		public static boolean set_calendar(String s, int type, boolean mode) //문자열 배열을 레퍼런스로 전달받아 시간표 값 수정
 		{
-			///for (int i = 0; i < 8; i++)
-				///for (int j = 0; j < 5; j++)
-					///calendar_label[i+1][j+1].setText(s[i][j]);
 			Vector<String[]> v = new Vector<String[]>();
 			String[] sSplit = s.split(" ");
 			String time_raw = sSplit[type];
@@ -98,13 +105,6 @@ public class GUI extends JFrame {
 				Week w = Week.valueOf(weekDay);
 				weekDay = String.valueOf(w.ordinal());
 				
-				/*
-				 * if (classTime.length() != 1) { String[] ct = classTime.split("-"); int start
-				 * = Integer.parseInt(ct[0]); int end = Integer.parseInt(ct[1]); String[]
-				 * resultArray = new String[end - start + 1]; for (int i = start; i <= end; i++)
-				 * { resultArray[i - start] = String.valueOf(i); } classTime = String.join(",",
-				 * resultArray); }
-				 */
 				v.add(new String[] {weekDay, classTime});
 			}
 			
@@ -125,7 +125,7 @@ public class GUI extends JFrame {
 			
 			String m = "";
 			if (mode)
-				m = sSplit[type - 2];
+				m = "<html>" + sSplit[type - 2] + "<br>" + sSplit[type] + "<html>";
 			
 			for (String[] ct : v) {
 				String[] class_col = ct[1].split("-");
@@ -194,6 +194,7 @@ public class GUI extends JFrame {
 		setTitle("Ttime");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container MainPane = getContentPane(); //전체 UI를 담을 프레임
+		//getContentPane().setBackground(Color.WHITE);
 		
 		JPanel calendar = new JPanel(); //시간표를 나타낼 패널
 		calendar.setLayout(new GridLayout(9, 6)); //[9][6]의 배열로 각 라벨을 담음
@@ -207,11 +208,15 @@ public class GUI extends JFrame {
 		cemester.setLayout(new GridLayout(1, 2));
 		String[] cemester_list = {"1-1", "1-2", "2-1", "2-2", "3-1", "3-2", "4-1", "4-2"};
 		JComboBox<String> cemester_combo = new JComboBox<String>(cemester_list); //학기 선택창을 구현할 콤보버튼
+		cemester_combo.setBackground(new Color(235, 235, 235));
+		cemester_combo.setBorder(new BevelBorder(BevelBorder.RAISED));
 		cemester_combo.addActionListener(new CemesterListener());
 		cemester.add(cemester_combo);
-		JButton cemester_button = new JButton("갱신");
-		cemester_button.addActionListener(new EditBtnListener());
-		cemester.add(cemester_button); //수정버튼
+		JButton bright_button = new JButton("DARK");
+		bright_button.setBackground(new Color(235, 235, 235));
+		bright_button.setBorder(new BevelBorder(BevelBorder.RAISED));
+		bright_button.addActionListener(new BrightBtnListener());
+		cemester.add(bright_button); //수정버튼
 		
 		JPanel grades = new JPanel(); //패널 안 성적 텍스트를 놓을 패널
 		grades.setLayout(new GridLayout(4, 1));
@@ -221,14 +226,21 @@ public class GUI extends JFrame {
 		JPanel search_bar = new JPanel(); //검색창 패널
 		search_bar.setLayout(new FlowLayout());
 		search_bar.add(new JLabel("검색 "));
-		JTextField search_textfield = new JTextField(10);
-		search_textfield.addActionListener(new SearchBarListener());
-		search_bar.add(search_textfield); //검색창
+		
+		//JTextField search_textfield = new JTextField(10);
+		GUIData.search_textfield.addActionListener(new SearchBarListener());
+		search_bar.add(GUIData.search_textfield); //검색창
+		
+		JButton sort_button = new JButton("정렬");
+		sort_button.setBackground(new Color(235, 235, 235));
+		sort_button.setBorder(new BevelBorder(BevelBorder.RAISED));
+		sort_button.addActionListener(new SortBtnListener());
+		search_bar.add(sort_button);
 		
 		JPanel search = new JPanel(); //검색결과를 담을 패널
 		search.setLayout(new BorderLayout());
 		search.add(search_bar, BorderLayout.NORTH);
-		search.add(new JScrollPane(GUIData.search_result), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
+		search.add(new JScrollPane(GUIData.search_result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		//JList<String> class_list = new JList<String>(GUIData.class_list); //현재 과목 리스트
 		//class_list.addKeyListener(new ClassListListener());
@@ -238,14 +250,14 @@ public class GUI extends JFrame {
 		menu.setLayout(new BorderLayout());
 		menu.add(cemester, BorderLayout.NORTH);
 		menu.add(grades, BorderLayout.SOUTH);
-		menu.add(new JScrollPane(GUIData.class_list), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
+		menu.add(new JScrollPane(GUIData.class_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		MainPane.setLayout(new BorderLayout()); //전체 패널에 모든 요소 추가
 		MainPane.add(calendar, BorderLayout.CENTER);
 		MainPane.add(menu, BorderLayout.WEST);
 		MainPane.add(search, BorderLayout.EAST);
 		
-		setSize(700, 500);
+		setSize(1000, 700);
 		setVisible(true);
 	}
 

@@ -1,16 +1,16 @@
 package frontend;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import backend.SummaryFileManager;
-import backend.TimetableFileManager;
-import backend.Calculator;
+import javax.swing.DefaultListModel;
+import java.util.Arrays;
+import java.util.Comparator;
 
-public class EditBtnListener implements ActionListener {
+public class SortBtnListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		TimetableFileManager tfile_manager = new TimetableFileManager(GUI.GUIData.current_cemester + ".txt");
+		/*TimetableFileManager tfile_manager = new TimetableFileManager(GUI.GUIData.current_cemester + ".txt");
 		tfile_manager.saveTimeTableToFile();
 		
 		SummaryFileManager sfile_manager = new SummaryFileManager();
@@ -42,7 +42,21 @@ public class EditBtnListener implements ActionListener {
 		cal.summaryAverage(former_score);
 		String[][] return_value = {{former_score[index][0], former_score[index][1]}, {former_score[8][0], former_score[8][1]}};
 		GUI.GUIData.set_grades(return_value);
-		sfile_manager.saveSummaryToFile(former_score);
+		sfile_manager.saveSummaryToFile(former_score);*/
+		DefaultListModel<String> listModel = (DefaultListModel<String>) GUI.GUIData.search_result.getModel();
+        String[][] itemsArray = new String[listModel.getSize()][];
+
+        for (int i = 0; i < listModel.getSize(); i++) {
+            itemsArray[i] = listModel.getElementAt(i).split(" ");
+        }
+        Arrays.sort(itemsArray, Comparator.comparingDouble((String[] arr) -> Double.parseDouble(arr[7])).reversed());
+
+        // 정렬된 결과 출력
+        DefaultListModel<String> newListModel = new DefaultListModel<String>();
+        for (String[] row : itemsArray) {
+        	newListModel.addElement(String.join(" ", row));
+        }
+        GUI.GUIData.search_result.setModel(newListModel);
 	}
 
 }
