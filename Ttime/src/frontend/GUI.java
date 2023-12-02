@@ -59,6 +59,15 @@ public class GUI extends JFrame {
 			
 			class_list.setFixedCellWidth(100);
 			class_list.addKeyListener(new ClassListListener());
+			class_list.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseEntered(MouseEvent e) {
+	            	DefaultListModel<String> listModel = new DefaultListModel<String>();
+
+	                String selectedValue = class_list.getSelectedValue();
+	                class_list.setToolTipText(selectedValue);
+	            }
+	        });
 			class_list.setModel(class_list_model);
 			
 			grades_label[0] = new JLabel("이번학기");
@@ -242,7 +251,7 @@ public class GUI extends JFrame {
 		JPanel search = new JPanel(); //검색결과를 담을 패널
 		search.setLayout(new BorderLayout());
 		search.add(search_bar, BorderLayout.NORTH);
-		search.add(new JScrollPane(GUIData.search_result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
+		search.add(new JScrollPane(GUIData.search_result), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		//JList<String> class_list = new JList<String>(GUIData.class_list); //현재 과목 리스트
 		//class_list.addKeyListener(new ClassListListener());
@@ -252,7 +261,7 @@ public class GUI extends JFrame {
 		menu.setLayout(new BorderLayout());
 		menu.add(cemester, BorderLayout.NORTH);
 		menu.add(grades, BorderLayout.SOUTH);
-		menu.add(new JScrollPane(GUIData.class_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
+		menu.add(new JScrollPane(GUIData.class_list), BorderLayout.CENTER); //리스트에 스크롤 기능을 넣음
 		
 		MainPane.setLayout(new BorderLayout()); //전체 패널에 모든 요소 추가
 		MainPane.add(calendar, BorderLayout.CENTER);
