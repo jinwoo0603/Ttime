@@ -4,12 +4,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-
-import frontend.GUI.GUIData;
 
 public class BrightBtnListener implements ActionListener {
 	private static void changeColors(Container container, String bright) {

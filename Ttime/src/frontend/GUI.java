@@ -8,7 +8,6 @@ import backend.TimetableFileManager;
 
 import java.awt.event.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,6 +86,9 @@ public class GUI extends JFrame {
 		{
 			Vector<String[]> v = new Vector<String[]>();
 			String[] sSplit = s.split(" ");
+			if (sSplit[3].equals("-")) {
+				return true;
+			}
 			String time_raw = sSplit[type];
 			
 			String[] time_list = time_raw.split("\\|");
